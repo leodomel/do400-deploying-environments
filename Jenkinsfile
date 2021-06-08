@@ -6,14 +6,18 @@ pipeline {
     }
     stages {
         stage('Tests') {
-            sh './mvnw clean test'
+            steps {
+                sh './mvnw clean test'
+            }
         }
         stage('Package') {
-            sh '''
-            ./mvnw package -DskipTests \
-            -Dquarkus.package.type=uber-jar
-            '''
-            archiveArtfacts 'target/*.jar'
+            steps {
+                sh '''
+                ./mvnw package -DskipTests \
+                -Dquarkus.package.type=uber-jar
+                '''
+                archiveArtfacts 'target/*.jar'
+            }
         }
     }
 }
